@@ -13,7 +13,11 @@ function load() {
   for (let i = 0; i < lenght; i++) {
     for (k = 1; k < lenght; k++) {
       if (lines[i] + lines[k] == goals) {
-        console.log(lines[i] * lines[k]);
+        return (
+          console.log("The first number is: " + lines[i]),
+          console.log("The second number is: " + lines[k]),
+          console.log("The total number is:  " + lines[i] * lines[k])
+        );
       }
     }
   }
