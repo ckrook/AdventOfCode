@@ -1,54 +1,23 @@
-let lines;
-var passwords = [];
-let myArray = {};
-let temp;
-let charCount = 0;
-
 function load() {
   fetch("sample.txt")
     .then((res) => res.text())
     .then((data) => {
-      lines = data.split("\n");
+      handleFetch(data);
     });
-  let lenght = Object.keys(lines).length;
-  lines.forEach((element) => {
-    let words = element.split(" ");
-    // console.log(words);
-    myArray = {
-      low: words[0].substring(0, words[0].indexOf("-")),
-      high: words[0].substring(words[0].indexOf("-") + 1),
-      character: words[1].substring(0, words[1].length - 1),
-      password: words[2],
-    };
-    passwords.push(myArray);
-  });
-
-  let countvalid = 0;
-  console.log(lines);
-  for (let k = 0; k < lenght; k++) {
-    let string = passwords[k].password;
-    let character = passwords[k].character;
-    let low = parseInt(passwords[k].low);
-    let high = parseInt(passwords[k].high);
-    console.log("Find", character, "in", string);
-    let regEx = new RegExp(`${character}`, "g");
-    let passwordlength;
-
-    let password = string.match(regEx);
-    if (password == null) password = 0;
-    else passwordlength = string.match(regEx).length;
-
-    if (passwordlength >= low && passwordlength <= high) {
-      countvalid++;
-    }
-  }
-  console.log(countvalid);
 }
 
-// let teststring = "abcdae";
-// let reg = /a/g;
-// console.log(reg);
-// console.log(teststring.match(reg));
-// if (teststring.match(reg).length) {
-//   console.log("true");
-// }
+function handleFetch(data) {
+  let count = 0;
+  let field = data.split("\n");
+  let scalefactor = Math.ceil((3 * field.length) / field[0].length);
+  console.log(scalefactor);
+  const bigfield = field.map((row) => row.repeat(10000));
+  let [row, col] = [0, 0];
+
+  while (row < field.length) {
+    if (bigfield[row][col] === "#") count++;
+    row += 2;
+    col++;
+    console.log(count);
+  }
+}

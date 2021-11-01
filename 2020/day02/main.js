@@ -1,26 +1,46 @@
 let lines;
-let goals = 2020;
+var passwords = [];
+let myArray = {};
+let temp;
+let charCount = 0;
 
 function load() {
   fetch("sample.txt")
     .then((res) => res.text())
     .then((data) => {
-      lines = data.split("\n").map((x) => parseInt(x));
+      lines = data.split("\n");
     });
   let lenght = Object.keys(lines).length;
+  lines.forEach((element) => {
+    let words = element.split(" ");
+    // console.log(words);
+    myArray = {
+      low: words[0].substring(0, words[0].indexOf("-")),
+      high: words[0].substring(words[0].indexOf("-") + 1),
+      character: words[1].substring(0, words[1].length - 1),
+      password: words[2],
+    };
+    passwords.push(myArray);
+  });
 
-  for (let i = 0; i < lenght; i++) {
-    for (k = 1; k < lenght; k++) {
-      for (m = 2; m < lenght; m++) {
-        if (lines[i] + lines[k] + lines[m] == goals) {
-          return (
-            console.log("Number 1 is: " + lines[i]),
-            console.log("Number 2 is: " + lines[k]),
-            console.log("Number 3 is: " + lines[m]),
-            console.log("The total number is " + lines[i] * lines[k] * lines[m])
-          );
-        }
-      }
+  let countvalid = 0;
+  console.log(lines);
+  for (let k = 0; k < lenght; k++) {
+    let string = passwords[k].password;
+    let character = passwords[k].character;
+    let low = parseInt(passwords[k].low);
+    let high = parseInt(passwords[k].high);
+    console.log("Find", character, "in", string);
+    let regEx = new RegExp(`${character}`, "g");
+    let passwordlength;
+
+    let password = string.match(regEx);
+    if (password == null) password = 0;
+    else passwordlength = string.match(regEx).length;
+
+    if (passwordlength >= low && passwordlength <= high) {
+      countvalid++;
     }
   }
+  console.log(countvalid);
 }
