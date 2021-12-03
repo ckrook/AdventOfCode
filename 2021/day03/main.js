@@ -5,8 +5,8 @@ function load() {
     .then((res) => res.text())
     .then((data) => {
       lines = data.split("\n");
-      first(data);
-      // second(data);
+      // first(data);
+      second(data);
     });
 }
 
@@ -77,15 +77,6 @@ function first(data) {
   console.log("Answer to part 1 is " + sum);
 }
 
-function second(data) {
-  let horizontal = 0;
-  let depth = 0;
-  let aim = 0;
-  let arr = [];
-  arr = data.split("\n");
-  console.log(arr);
-}
-
 function gammafunc(string) {
   let length = string.length;
   let countzero = 0;
@@ -124,4 +115,32 @@ function epsilonfunc(string) {
   } else {
     return "0";
   }
+}
+
+function second(data) {
+  let x = [];
+  let arr = [];
+  arr = data.split("\n");
+  let an = func(arr);
+  console.log(an);
+}
+
+function func(arr) {
+  console.log(arr);
+  let count1;
+  let count0;
+  let i = 0;
+  arr.forEach((element) => {
+    if (element.charAt(i) === "1") {
+      count1++;
+    } else {
+      count0++;
+    }
+    i++;
+    if (arr.length === i) {
+      if (count1 > count0) {
+        arr.forEach((element) => {});
+      }
+    }
+  });
 }
